@@ -1,0 +1,396 @@
+#include<stdio.h>
+#include<windows.h>
+int login ();
+int cnew ();
+int menu ();
+int acting,update,admin,feature,payment,i,breakfast,lunch,dinner,n,m,exp,j;
+char aname[20],apassword[20],date[20],uname[20],sname[100];
+char rname[20],mname[20],mpassword[20];
+FILE *manager,*mupdate,*eupdate,*pupdate,*apass,*mmname;
+
+
+int main()
+
+{
+    system("color  A");
+    printf("========================================================================================================================\n");
+    printf("\t\t\t\t\t\t WELCOME TO MESS MANAGEMENT\n");
+    printf("========================================================================================================================\n");
+    printf("========================================================================================================================\n");
+    printf("\t\t\t\t\t\tMESS MANAGER \n");
+    printf("========================================================================================================================\n");
+    printf("\n\n\n1.log in\n\nor 2.crate new\n");
+    scanf("%d",& admin);
+    if(admin==1)
+        login();
+    else if (admin==2)
+        cnew();
+}
+
+int cnew ()
+{
+    system("color  A");
+    system("cls");
+    printf("========================================================================================================================\n");
+    printf("\t\t\t\t\t\tWELCOME TO MESS MANAGEMENT\n");
+    printf("========================================================================================================================\n");
+
+    printf("\t\t\t\t\t==========================================\n");
+    printf("\t\t\t\t\t\tManager registration\n");
+    printf("\t\t\t\t\t==========================================\n\n\n\n");
+    printf("Name:");
+    scanf("%s",rname);
+    printf("\nUser Name:");
+    scanf("%s",mname);
+    printf("\nUser Password[Max Length 10]:");
+    char d=' ';
+    while (i<=10)
+    {
+        mpassword[i]=getch();
+        d=mpassword[i];
+        if(d==13) break;
+        else printf("*");
+        i++;
+    }
+    mpassword[i]='\0';
+    printf("\n\nsuccessfully saved\n");
+    manager=fopen("manager registration.txt","a");
+    apass=fopen("manager's name & password.txt","a");
+    fprintf(apass,"%s %s\n",mname,mpassword);
+    fclose(apass);
+    fprintf(manager,"%s %s %s\n",rname,mname,mpassword);
+    fclose(manager);
+    printf ("\n\t\t[1] Log in\n\t\t[2] Quit\n");
+    scanf ("%d",&n);
+    if (n==1)
+        login();
+    else if (n==2)
+    {
+        printf ("Thank You\n");
+        printf ("Press Anything For Quit\n");
+    }
+
+}
+
+
+int login ()
+{
+    system("color  A");
+    system("cls");
+    printf("========================================================================================================================\n");
+    printf("\t\t\t\t\t\tWELCOME TO MESS MANAGEMENT\n");
+    printf("========================================================================================================================\n");
+
+    printf("Enter Manager name:\n");
+    scanf("%s",aname);
+    printf("Enter Password[Max Length 10]:\n");
+    char c=' ';
+    while (i<=10)
+    {
+        apassword[i]=getch();
+        c=apassword[i];
+        if(c==13) break;
+        else printf("*");
+        i++;
+    }
+    apassword[i]='\0';
+    apass=fopen("manager's name & password.txt","r");
+    while(fscanf(apass,"%s %s",mname,mpassword)!=EOF)
+    {
+        if(strcmp(aname,mname)==0&&strcmp(apassword
+                                          ,mpassword)==0)
+        {
+
+            menu ();
+        }
+    }
+}
+int menu ()
+{
+    system("color  A");
+    system("cls");
+    printf("\t\t\t\t\t==========================================\n");
+    printf("\t\t\t\t\t\tMAIN MENU\n");
+    printf("\t\t\t\t\t==========================================\n\n\n\n");
+    printf("\n1.Meal Routine\n2.update today\n");
+    printf("3.update payment\n4.History\n\n");
+    scanf("%d",&feature);
+
+    if(feature==1)
+    {
+        system("cls");
+        printf("\t\t\t\t\t==========================================\n");
+        printf("\t\t\t\t\t\tMeal Routine\n");
+        printf("\t\t\t\t\t==========================================\n\n\n\n");
+        printf("           Saturday     Sunday     Monday      Tuesday     Wednesday   Thursday     Friday\n");
+        printf("Breakfast:Khicuri+Egg  Ruti+Vaji  Ruti+Vaji   Khicuri+Egg  Ruti+Vaji   Ruti+Vaji    khicuri+Egg\n");
+        printf("Lunch:    Rice+Fish  Rice+Chicken Rice+Fish   Rice+Beef    Rice+Egg   Rice+Chicken  Khicuri+beef\n");
+        printf("Dinner:   Rice+Egg   Rice+Fish    Rice+Fish  Rice+Fish     Rice+Beef  Rice+Egg      Rice+Vegetable");
+        printf ("\n\t\t[1] Main Menu\n\t\t[2] Quit\n");
+        scanf ("%d",&n);
+        if (n==1)
+            menu();
+        else if (n==2)
+        {
+            printf ("Thank You\n");
+            printf ("Press Anything For Quit\n");
+        }
+
+    }
+
+
+
+    else if(feature==2)
+    {
+        system("color  A");
+        system("cls");
+        printf("\t\t\t\t\t==========================================\n");
+        printf("\t\t\t\t\t\tupdate today\n");
+        printf("\t\t\t\t\t==========================================\n\n\n\n");
+        printf("1.Meal Update\n2.expenses update\n3.Update members name\n");
+        scanf("%d",&update);
+        if(update==1)
+        {
+            system("cls");
+            printf("\t\t\t\t\t==========================================\n");
+            printf("\t\t\t\t\t\tMeal update\n");
+            printf("\t\t\t\t\t==========================================\n\n\n\n");
+            printf("enter date:");
+            scanf("%s",date);
+            printf("Enter Total person");
+            scanf("%d",&m);
+            for(i=0; i<m; i++)
+            {
+                printf("enter name:");
+                scanf("%s",uname);
+                printf("enter breakfast:");
+                scanf("%d",&breakfast);
+                printf("enter lunch:");
+                scanf("%d",&lunch);
+                printf("enter dinner:");
+                scanf("%d",&dinner);
+
+                mupdate=fopen("meal update.txt","a+");
+                fprintf(mupdate,"%s %s %d %d %d\n",date,uname,breakfast,lunch,dinner);
+
+                fclose(mupdate);
+            }
+            printf ("\n\t\t[1] Main Menu\n\t\t[2] Quit\n");
+            scanf ("%d",&n);
+            if (n==1)
+                menu();
+            else if (n==2)
+            {
+                printf ("Thank You\n");
+                printf ("Press Anything For Quit\n");
+            }
+        }
+
+        else if(update==2)
+        {
+            system("color  A");
+            system("cls");
+            printf("\t\t\t\t\t==========================================\n");
+            printf("\t\t\t\t\t\tExpenses update\n");
+            printf("\t\t\t\t\t==========================================\n\n\n\n");
+            printf("Enter Date:");
+            scanf("%s",&date);
+            printf("Expenses:");
+            scanf("%d",&exp);
+            printf("\n\n\nSave successful");
+            eupdate=fopen("expenses update.txt","a");
+            fprintf(eupdate,"%s %d\n",date,exp);
+            fclose(eupdate);
+            printf ("\n\t\t[1] Main Menu\n\t\t[2] Quit\n");
+            scanf ("%d",&n);
+            if (n==1)
+                menu();
+            else if (n==2)
+            {
+                printf ("Thank You\n");
+                printf ("Press Anything For Quit\n");
+            }
+
+        }
+
+
+        else if(update==3)
+        {
+            system("color  A");
+            system("cls");
+            printf("\t\t\t\t\t==========================================\n");
+            printf("\t\t\t\t\t\tMembers Name\n");
+            printf("\t\t\t\t\t==========================================\n\n\n\n");
+            printf("Enter Total Member:\n");
+            scanf("%d",&j);
+            printf("Enter Mess Members Name:\n");
+            for(i=0; i<j; i++)
+            {
+                scanf("%s",sname);
+                mmname=fopen("members name.txt","a");
+                fprintf(mmname,"%s\n",sname);
+                fclose(mmname);
+            }
+            printf ("\n\t\t[1] Main Menu\n\t\t[2] Quit\n");
+            scanf ("%d",&n);
+            if (n==1)
+                menu();
+            else if (n==2)
+            {
+                printf ("Thank You\n");
+                printf ("Press Anything For Quit\n");
+            }
+            else
+                printf("press 1 to 3");
+        }
+    }
+    else if(feature==3)
+    {
+        system("color  A");
+        system("cls");
+        printf("\t\t\t\t\t==========================================\n");
+        printf("\t\t\t\t\t\tUpdate Payment\n");
+        printf("\t\t\t\t\t==========================================\n\n\n\n");
+        printf("Enter Total person:\n");
+        scanf("%d",&m);
+        for(i=0; i<m; i++)
+        {
+            printf("Enter Member's Name:\n");
+            scanf("%s",&aname);
+            printf("Enter Amount:\n");
+            scanf("%d",&payment);
+            printf("\n\n\nsave successful:\n");
+            pupdate=fopen("payment update.txt","a");
+            fprintf(pupdate,"%s %d\n",aname,payment);
+            fclose(pupdate);
+        }
+        printf ("\n\t\t[1] Main Menu\n\t\t[2] Quit\n");
+        scanf ("%d",&n);
+        if (n==1)
+            menu();
+        else if (n==2)
+        {
+            printf ("Thank You\n");
+            printf ("Press Anything For Quit\n");
+        }
+
+    }
+
+    else if(feature==4)
+    {
+        system("color  A");
+        system("cls");
+        printf("\t\t\t\t\t==========================================\n");
+        printf("\t\t\t\t\t\tHistory\n");
+        printf("\t\t\t\t\t==========================================\n\n\n\n");
+        printf("\t\t\t\t\t==========================================\n");
+        printf("\t\t\t\t\t\t 1.Total Meal\n \t\t\t\t\t\t2.Total Expenses\n\t\t\t\t\t\t3.Meal Rate\n");
+        printf("\t\t\t\t\t==========================================\n\n\n\n");
+        char date[100], name[100],date1[100];
+        int m1,m2,m3,e1,te;
+        double mr,sum=0,sum1=0;
+
+        mupdate = fopen ("meal update.txt", "r");
+        eupdate = fopen ("expenses update.txt", "r");
+        while(fscanf(mupdate, "%s %s %d %d %d", date, name, &m1,&m2,&m3)!=EOF)
+        {
+
+            i=m1+m2+m3;
+            sum=sum+i;
+
+        }
+        while(fscanf(eupdate, "%s %d", date1,&e1)!=EOF )
+        {
+            te=e1;
+            sum1=sum1+e1;
+        }
+        mr=sum1/sum;
+        printf(" total meal:%lf \n",sum);
+        printf(" total expenses:%lf \n",sum1);
+        printf(" Meal Rate:%lf \n",mr);
+        printf("\t\t\t\t\t==========================================\n");
+        printf("\t\t\t\t\t\t 1.Members Total Meal\n \t\t\t\t\t\t2.Members Total Cost\n\t\t\t\t\t\t3.Members Deposit\n\t\t\t\t\t\t4.Members Current Balance\n\t\t\t\t\t\t5.Manager current balance\n");
+        printf("\t\t\t\t\t==========================================\n\n\n\n");
+
+        char date2[100], name1[100],name3[100],xname[100];
+        int m4,m5,m6,tc,tm1,summeal=0,result=0;
+        mmname = fopen ("members name.txt", "r");
+        printf("\t\t\t\t\t\tAll Members Name:\n");
+        printf("\t\t\t\t\t==========================================\n\n\n\n");
+        while(fscanf(mmname,"%s",xname)!=EOF )
+        {
+            printf("%s\n",xname);
+        }
+
+        printf("\t\t\t\t\t==========================================\n\n\n\n");
+        printf("Enter any member name from above:\n");
+        scanf("%s",name3);
+        mupdate = fopen ("meal update.txt", "r");
+        while(fscanf(mupdate, "%s %s %d %d %d", date2,name1,&m4,&m5,&m6)!=EOF)
+        {
+            result=strcmp(name3,name1);
+            if(result==0)
+            {
+                tm1=m4+m5+m6;
+                summeal=tm1+summeal;
+            }
+
+            tc=summeal*mr;
+        }
+
+
+        printf("1.%s total meal:%d\n",name3,summeal);
+        printf("2.%s total cost:%d\n",name3,tc);
+
+
+
+        char name2[100],name4[100];
+        double cb;
+        int p1,sumdepo=0,td=0,mcb;
+        pupdate = fopen("payment update.txt", "r");
+
+        while(fscanf(pupdate, "%s %d", name2,&p1)!=EOF)
+        {
+            result=strcmp(name3,name2);
+            if(result==0)
+
+            {
+                sumdepo=sumdepo+p1;
+                cb=(sumdepo-tc);
+                printf("3.%s total deposit:%d\n",name3,sumdepo);
+
+            }
+
+            i=p1;
+            td=td+p1;
+        }
+
+        printf("4.%s current balance:%lf\n",name3,cb);
+        printf("\t\t\t\t\t==========================================\n");
+        printf("\t\t\t\t\t\tManager Current Balance\n");
+        printf("\t\t\t\t\t==========================================\n\n\n\n");
+
+        mcb=td-sum1;
+        printf("5.Manager current balance:%d",mcb);
+
+
+
+        printf ("\n\t\t[1] Main Menu\n\t\t[2] Quit\n");
+        scanf ("%d",&n);
+        if (n==1)
+            menu();
+        else if (n==2)
+        {
+            printf ("Thank You\n");
+            printf ("Press Anything For Quit\n");
+        }
+
+
+    }
+
+
+    else
+    {
+        printf("Wrong Keyword.please press between 1 to 4:");
+    }
+}
